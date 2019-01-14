@@ -1,7 +1,5 @@
 import React from 'react';
-// import firebase from 'firebase/app';
 import './Weather.scss';
-// import connection from '../../../helpers/data/connection';
 import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
