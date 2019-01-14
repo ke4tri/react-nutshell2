@@ -15,10 +15,8 @@ import Articles from '../components/pages/Articles/Articles';
 import Messages from '../components/pages/Messages/Messages';
 import Events from '../components/pages/Events/Events';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
-// import apiKeys from '../helpers/apiKeys';
 import './App.scss';
 import authRequests from '../helpers/data/authRequests';
-// import weatherRequests from '../helpers/data/weatherRequests';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -38,8 +36,6 @@ class App extends React.Component {
   state = {
     authed: false,
     pendingUser: true,
-    // uid: '',
-    // weather: [],
   }
 
   componentDidMount() {
@@ -47,7 +43,7 @@ class App extends React.Component {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // eslint-disable-next-line prefer-destructuring
-        const uid = user.uid;
+        const { uid  }= user;
         this.setState({
           authed: true,
           pendingUser: false,

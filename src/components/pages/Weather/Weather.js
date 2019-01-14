@@ -1,16 +1,17 @@
 import React from 'react';
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
 import './Weather.scss';
-import connection from '../../../helpers/data/connection';
+// import connection from '../../../helpers/data/connection';
 import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
-
+import authRequests from '../../../helpers/data/articleRequests';
 
 class Weather extends React.Component {
   state = {
     uid: '',
     weatherArray2: [],
+    currentWx: false,
   }
 
   getWx = (uid2) => {
@@ -21,28 +22,17 @@ class Weather extends React.Component {
       .catch(err => console.error('error with getWeather', err));
   }
 
-  componentDidMount() {
-    connection();
-    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        // eslint-disable-next-line prefer-destructuring
-        const uid = user.uid;
-        this.setState({
-          uid,
-        });
-        this.getWx(uid);
-      } else {
-        this.setState({
-          uid: '',
-        });
-      }
-    });
+  componentWillMount() {
+    const newUid = authRequests.getCurrentUid();
+    this.setState({ newUid });
+    this.getWx(newUid);
+    console.log(newUid);
   }
 
   render() {
-    const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2" key={index}>
-        {weatherItem.city}, 
-        {weatherItem.state}
+    const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2 container" key={index}>
+        {weatherItem.city},
+        {weatherItem.state}<button className="btn btn-danger">Current Location</button>
       </div>);
     return (
       <div className='Home'>
