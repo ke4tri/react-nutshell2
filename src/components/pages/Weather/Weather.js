@@ -3,11 +3,13 @@ import './Weather.scss';
 import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
-import authRequests from '../../../helpers/data/articleRequests';
+import authRequests2 from '../../../helpers/data/authRequests';
+// import authRequests2 from '../../../helpers/data/articleRequests';
 
 class Weather extends React.Component {
   state = {
     uid: '',
+    newUid: '',
     weatherArray2: [],
     currentWx: false,
   }
@@ -21,10 +23,9 @@ class Weather extends React.Component {
   }
 
   componentWillMount() {
-    const newUid = authRequests.getCurrentUid();
+    const newUid = authRequests2.getCurrentUid();
     this.setState({ newUid });
     this.getWx(newUid);
-    console.log(newUid);
   }
 
   render() {
