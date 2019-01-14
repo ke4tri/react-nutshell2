@@ -15,9 +15,10 @@ import Articles from '../components/pages/Articles/Articles';
 import Messages from '../components/pages/Messages/Messages';
 import Events from '../components/pages/Events/Events';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
-
+// import apiKeys from '../helpers/apiKeys';
 import './App.scss';
 import authRequests from '../helpers/data/authRequests';
+// import weatherRequests from '../helpers/data/weatherRequests';
 
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
@@ -37,20 +38,26 @@ class App extends React.Component {
   state = {
     authed: false,
     pendingUser: true,
+    // uid: '',
+    // weather: [],
   }
 
   componentDidMount() {
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        // eslint-disable-next-line prefer-destructuring
+        const uid = user.uid;
         this.setState({
           authed: true,
           pendingUser: false,
+          uid,
         });
       } else {
         this.setState({
           authed: false,
           pendingUser: false,
+          uid: '',
         });
       }
     });
@@ -61,7 +68,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed, pendingUser } = this.state;
+    const { authed, pendingUser, uid } = this.state;
     const logoutClickEvent = () => {
       authRequests.logoutUser();
       this.setState({ authed: false });
@@ -82,7 +89,7 @@ class App extends React.Component {
                   <PrivateRoute path='/home' component={Home} authed={this.state.authed} />
                   <PrivateRoute path="/friends" authed={this.state.authed} component={Friends} />
                   <PrivateRoute path="/articles" authed={this.state.authed} component={Articles} />
-                  <PrivateRoute path="/weather" authed={this.state.authed} component={Weather} />
+                  <PrivateRoute path='/weather' component={() => <Weather uid={uid} />} authed={authed} />
                   <PrivateRoute path="/events" authed={this.state.authed} component={Events} />
                   <PrivateRoute path="/messages" authed={this.state.authed} component={Messages} />
                   <PublicRoute path='/auth' component={Auth} authed={this.state.authed}/>

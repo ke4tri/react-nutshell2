@@ -6,6 +6,10 @@
     storageBucket: '',
     messagingSenderId: '',
   },
+  weatherbit: {
+    apiKey: '',
+
+  },
 };
 
 export default apiKeys;
