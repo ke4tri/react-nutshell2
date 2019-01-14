@@ -42,18 +42,14 @@ class App extends React.Component {
     connection();
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // eslint-disable-next-line prefer-destructuring
-        const { uid  }= user;
         this.setState({
           authed: true,
           pendingUser: false,
-          uid,
         });
       } else {
         this.setState({
           authed: false,
           pendingUser: false,
-          uid: '',
         });
       }
     });
@@ -64,7 +60,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed, pendingUser, uid } = this.state;
+    const { authed, pendingUser } = this.state;
     const logoutClickEvent = () => {
       authRequests.logoutUser();
       this.setState({ authed: false });
@@ -85,7 +81,7 @@ class App extends React.Component {
                   <PrivateRoute path='/home' component={Home} authed={this.state.authed} />
                   <PrivateRoute path="/friends" authed={this.state.authed} component={Friends} />
                   <PrivateRoute path="/articles" authed={this.state.authed} component={Articles} />
-                  <PrivateRoute path='/weather' component={() => <Weather uid={uid} />} authed={authed} />
+                  <PrivateRoute path='/weather' authed={authed} component={Weather} />
                   <PrivateRoute path="/events" authed={this.state.authed} component={Events} />
                   <PrivateRoute path="/messages" authed={this.state.authed} component={Messages} />
                   <PublicRoute path='/auth' component={Auth} authed={this.state.authed}/>

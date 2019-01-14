@@ -7,7 +7,6 @@ import authRequests2 from '../../../helpers/data/authRequests';
 
 class Weather extends React.Component {
   state = {
-    uid: '',
     newUid: '',
     weatherArray2: [],
     currentWx: false,
