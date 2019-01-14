@@ -4,7 +4,6 @@ import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
 import authRequests2 from '../../../helpers/data/authRequests';
-// import authRequests2 from '../../../helpers/data/articleRequests';
 
 class Weather extends React.Component {
   state = {
@@ -14,18 +13,14 @@ class Weather extends React.Component {
     currentWx: false,
   }
 
-  getWx = (uid2) => {
-    getWeather2.getWeather(uid2)
+  componentWillMount() {
+    const newUid = authRequests2.getCurrentUid();
+    this.setState({ newUid });
+    getWeather2.getWeather(newUid)
       .then((weatherArray2) => {
         this.setState({ weatherArray2 });
       })
       .catch(err => console.error('error with getWeather', err));
-  }
-
-  componentWillMount() {
-    const newUid = authRequests2.getCurrentUid();
-    this.setState({ newUid });
-    this.getWx(newUid);
   }
 
   render() {
