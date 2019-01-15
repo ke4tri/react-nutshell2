@@ -6,7 +6,8 @@ import {
   Row,
   Button,
 } from 'reactstrap';
-import weatherRequest from '../../../helpers/data/weatherRequests';
+// import authRequests from '../../../helpers/data/articleRequests';
+// import weatherRequest from '../../../helpers/data/weatherRequests';
 
 const defaultWeather = {
   city: '',
@@ -18,14 +19,31 @@ const defaultWeather = {
 class WeatherForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
+    newUid: PropTypes.arrayOf(PropTypes.array),
   };
 
   state = {
     newWeather: defaultWeather,
   }
 
- weatherForm = () => {
-   weatherRequest.postRequest();
+ formFieldStringState = (name, e) => {
+   e.preventDefault();
+   const tempWeather = { ...this.state.newWeather };
+   tempWeather[name] = e.target.value;
+   this.setState({ newWeather: tempWeather });
+ }
+
+ cityChange = e => this.formFieldStringState('city', e);
+
+ stateChange = e => this.formFieldStringState('state', e);
+
+ formSubmit = (e) => {
+   e.preventDefault();
+   const { onSubmit } = this.props;
+   const newWeather = { ...this.state.newWeather };
+   //  newWeather.uid = authRequests.getCurrentUid();
+   onSubmit(newWeather);
+   this.setState({ newWeather: defaultWeather });
  }
 
  render() {
