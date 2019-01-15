@@ -6,8 +6,6 @@ import {
   Row,
   Button,
 } from 'reactstrap';
-// import authRequests from '../../../helpers/data/articleRequests';
-// import weatherRequest from '../../../helpers/data/weatherRequests';
 
 const defaultWeather = {
   city: '',
@@ -27,7 +25,7 @@ class WeatherForm extends React.Component {
   }
 
  formFieldStringState = (name, e) => {
-   e.preventDefault();
+   //  e.preventDefault();
    const tempWeather = { ...this.state.newWeather };
    tempWeather[name] = e.target.value;
    this.setState({ newWeather: tempWeather });
@@ -38,7 +36,7 @@ class WeatherForm extends React.Component {
  stateChange = e => this.formFieldStringState('state', e);
 
  formSubmit = (e) => {
-   e.preventDefault();
+   //  e.preventDefault();
    const { onSubmit } = this.props;
    const newWeather = { ...this.state.newWeather };
    newWeather.uid = this.props.newUid;
@@ -124,14 +122,3 @@ class WeatherForm extends React.Component {
 }
 
 export default WeatherForm;
-//   <Form inline>
-//   <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-//     <Label for="exampleCity" className="mr-sm-2">City</Label>
-//     <Input type="text" name="city" id="exampleCity" placeholder="Nashville" />
-//   </FormGroup>
-//   <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-//     <Label for="exampleState" className="mr-sm-2">State</Label>
-//     <Input type="text" name="state" id="exampleState" placeholder="Tn" />
-//   </FormGroup>
-//   <Button onClick={this.locationSubmit}>Submit</Button>
-// </Form>

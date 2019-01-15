@@ -34,8 +34,8 @@ class Weather extends React.Component {
   render() {
     const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2 container" key={index}>
         {weatherItem.city},
-        {weatherItem.state}<button className="btn btn-danger" onClick={this.currentWxState}>Current Location</button>
-      </div>);
+        {weatherItem.state}<button className="btn btn-danger" onClick={this.notSureYet}>Current Location</button>
+    <button className="btn btn-danger" onClick={this.currentWxState}>X</button></div>);
     return (
       <div className='Home'>
         <h2>Weather </h2>
