@@ -17,7 +17,6 @@ const defaultWeather = {
 class WeatherForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
-    newUid: PropTypes.arrayOf(PropTypes.array),
   };
 
   state = {

@@ -4,6 +4,7 @@ import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
 import authRequests2 from '../../../helpers/data/authRequests';
+import WeatherLocations from './WeatherLocations';
 
 class Weather extends React.Component {
   state = {
@@ -31,21 +32,24 @@ class Weather extends React.Component {
       .catch(err => console.error('error with weather post', err));
   }
 
-  takeOut = (weatherId) => {
-    getWeather2.deleteWeather(weatherId);
-  }
 
   render() {
-    const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2 container" key={index}>
-        {weatherItem.city},
-        {weatherItem.state}<button className="btn btn-danger" onClick={this.notSureYet}>Current Location</button>
-    <button className="btn btn-danger" onClick={this.takeOut}>X</button></div>);
+    // const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2 container" key={index}>
+    //     {weatherItem.city},
+    //     {weatherItem.state}<button className="btn btn-danger" onClick={this.notSureYet}>Current Location</button>
+    const weatherItemComponents = this.state.weatherArray2.map(weather => (
+      <WeatherLocations
+      weather={weather}
+      />
+    ));
+    // <button className="btn btn-danger" onClick={this.editEvent}>X</button></div>);
     return (
       <div className='Home'>
         <h2>Weather </h2>
         <div className="container d-flex flex-row">
         <div className="wxForm"><WeatherForm newUid={this.state.newUid} onSubmit={this.formSubmitEvent}/></div>
-         <div className="city1 container d-flex flex-column"> {weatherItemComponents}</div>
+         {/* <div className="city1 container d-flex flex-column"> {weatherItemComponents}</div> */}
+         <div className="city1">{weatherItemComponents}</div>
          <div className="currentWx"><CurrentWeather onClick /></div>
         </div>
       </div>
