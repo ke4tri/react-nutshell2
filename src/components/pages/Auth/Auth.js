@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Auth.scss';
 import authRequests from '../../../helpers/data/authRequests';
-
 import googleButton from './images/google_PNG19626.png';
 
 class Auth extends React.Component {

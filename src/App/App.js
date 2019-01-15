@@ -15,7 +15,6 @@ import Articles from '../components/pages/Articles/Articles';
 import Messages from '../components/pages/Messages/Messages';
 import Events from '../components/pages/Events/Events';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
-
 import './App.scss';
 import authRequests from '../helpers/data/authRequests';
 
@@ -82,7 +81,7 @@ class App extends React.Component {
                   <PrivateRoute path='/home' component={Home} authed={this.state.authed} />
                   <PrivateRoute path="/friends" authed={this.state.authed} component={Friends} />
                   <PrivateRoute path="/articles" authed={this.state.authed} component={Articles} />
-                  <PrivateRoute path="/weather" authed={this.state.authed} component={Weather} />
+                  <PrivateRoute path='/weather' authed={authed} component={Weather} />
                   <PrivateRoute path="/events" authed={this.state.authed} component={Events} />
                   <PrivateRoute path="/messages" authed={this.state.authed} component={Messages} />
                   <PublicRoute path='/auth' component={Auth} authed={this.state.authed}/>
