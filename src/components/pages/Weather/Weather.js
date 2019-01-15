@@ -11,12 +11,6 @@ class Weather extends React.Component {
     weatherArray2: [],
   }
 
-  // currentWxState = (e) => {
-  //   e.preventDefault();
-  //   getWeather2.postRequest();
-  //   console.log('This will change state');
-  // }
-
   componentWillMount() {
     const newUid = authRequests2.getCurrentUid();
     this.setState({ newUid });

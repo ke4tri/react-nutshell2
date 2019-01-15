@@ -41,7 +41,7 @@ class WeatherForm extends React.Component {
    e.preventDefault();
    const { onSubmit } = this.props;
    const newWeather = { ...this.state.newWeather };
-   //  newWeather.uid = authRequests.getCurrentUid();
+   newWeather.uid = this.props.newUid;
    onSubmit(newWeather);
    this.setState({ newWeather: defaultWeather });
  }
