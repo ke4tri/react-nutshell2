@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Weather.scss';
 import getWeather2 from '../../../helpers/data/weatherRequests';
 import CurrentWeather from './CurrentWeather';
@@ -12,6 +13,10 @@ class Weather extends React.Component {
     weatherArray2: [],
   }
 
+  static propTypes = {
+    weather: PropTypes.func,
+  }
+
   componentWillMount() {
     const newUid = authRequests2.getCurrentUid();
     this.setState({ newUid });
@@ -22,11 +27,23 @@ class Weather extends React.Component {
       .catch(err => console.error('error with getWeather', err));
   }
 
+  deleteOne = (weatherId) => {
+    // const newUid = authRequests2.getCurrentUid();
+    getWeather2.deleteWeather(weatherId)
+      .then(() => {
+        getWeather2.getWeather(this.state.newUid)
+          .then((weatherArray2) => {
+            this.setState({ weatherArray2 });
+          });
+      })
+      .catch(err => console.error('error with deleteOne', err));
+  }
+
   formSubmitEvent = (newWeather) => {
     getWeather2.postRequest(newWeather).then(() => {
       getWeather2.getWeather(this.props.uid)
-        .then((weather) => {
-          this.setState({ weather });
+        .then((weatherArray2) => {
+          this.setState({ weatherArray2 });
         });
     })
       .catch(err => console.error('error with weather post', err));
@@ -34,21 +51,17 @@ class Weather extends React.Component {
 
 
   render() {
-    // const weatherItemComponents = this.state.weatherArray2.map((weatherItem, index) => <div id={weatherItem.id} className="fas fa-city fa-2x city2 m-2 container" key={index}>
-    //     {weatherItem.city},
-    //     {weatherItem.state}<button className="btn btn-danger" onClick={this.notSureYet}>Current Location</button>
     const weatherItemComponents = this.state.weatherArray2.map(weather => (
       <WeatherLocations
       weather={weather}
+      deleteSingleWeather={this.deleteOne}
       />
     ));
-    // <button className="btn btn-danger" onClick={this.editEvent}>X</button></div>);
     return (
       <div className='Home'>
         <h2>Weather </h2>
         <div className="container d-flex flex-row">
         <div className="wxForm"><WeatherForm newUid={this.state.newUid} onSubmit={this.formSubmitEvent}/></div>
-         {/* <div className="city1 container d-flex flex-column"> {weatherItemComponents}</div> */}
          <div className="city1">{weatherItemComponents}</div>
          <div className="currentWx"><CurrentWeather onClick /></div>
         </div>
