@@ -24,7 +24,6 @@ class Weather extends React.Component {
     getWeather2.getWeather(newUid)
       .then((weatherArray2) => {
         this.setState({ weatherArray2 });
-        console.log(this.props.weather);
         console.log(this.state.weatherArray2);
       })
       .catch(err => console.error('error with getWeather', err));
