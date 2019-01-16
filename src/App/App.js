@@ -5,6 +5,7 @@ import {
   BrowserRouter, Route, Redirect, Switch,
 } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
 import connection from '../helpers/data/connection';
 
 import Auth from '../components/pages/Auth/Auth';
@@ -36,6 +37,10 @@ class App extends React.Component {
   state = {
     authed: false,
     pendingUser: true,
+  }
+
+  static propTypes = {
+    weather: PropTypes.func,
   }
 
   componentDidMount() {
