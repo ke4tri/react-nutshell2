@@ -41,7 +41,7 @@ class Weather extends React.Component {
 
   formSubmitEvent = (newWeather) => {
     getWeather2.postRequest(newWeather).then(() => {
-      getWeather2.getWeather(this.props.uid)
+      getWeather2.getWeather(this.state.newUid)
         .then((weatherArray2) => {
           this.setState({ weatherArray2 });
         });
@@ -49,21 +49,22 @@ class Weather extends React.Component {
       .catch(err => console.error('error with weather post', err));
   }
 
-
   render() {
     const weatherItemComponents = this.state.weatherArray2.map(weather => (
       <WeatherLocations
       weather={weather}
+      key={weather.id}
       deleteSingleWeather={this.deleteOne}
+      weatherArray2={this.state.weatherArray2}
       />
     ));
     return (
-      <div className='Home'>
-        <h2>Weather </h2>
+      <div className='Home mx-auto'>
+        <h3>Weather </h3>
         <div className="container d-flex flex-row">
         <div className="wxForm"><WeatherForm newUid={this.state.newUid} onSubmit={this.formSubmitEvent}/></div>
          <div className="city1">{weatherItemComponents}</div>
-         <div className="currentWx"><CurrentWeather onClick /></div>
+         <div className="currentWx"><CurrentWeather weatherArray2={this.state.weatherArray2} /></div>
         </div>
       </div>
     );

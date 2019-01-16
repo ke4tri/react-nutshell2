@@ -6,6 +6,7 @@ import {
   Row,
   Button,
 } from 'reactstrap';
+// import weatherShape from '../../../helpers/propz/weatherShape'
 
 const defaultWeather = {
   city: '',
@@ -17,6 +18,7 @@ const defaultWeather = {
 class WeatherForm extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func,
+    weatherArray2: PropTypes.arrayOf(PropTypes.PropTypes.func),
   };
 
   state = {
@@ -35,7 +37,7 @@ class WeatherForm extends React.Component {
  stateChange = e => this.formFieldStringState('state', e);
 
  formSubmit = (e) => {
-   //  e.preventDefault();
+   e.preventDefault();
    const { onSubmit } = this.props;
    const newWeather = { ...this.state.newWeather };
    newWeather.uid = this.props.newUid;
