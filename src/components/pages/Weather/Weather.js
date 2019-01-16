@@ -6,6 +6,7 @@ import CurrentWeather from './CurrentWeather';
 import WeatherForm from './WeatherForm';
 import authRequests2 from '../../../helpers/data/authRequests';
 import WeatherLocations from './WeatherLocations';
+import weatherShape from '../../../helpers/propz/weatherShape';
 
 class Weather extends React.Component {
   state = {
@@ -14,7 +15,7 @@ class Weather extends React.Component {
   }
 
   static propTypes = {
-    weather: PropTypes.func,
+    weather: PropTypes.arrayOf(weatherShape),
   }
 
   componentWillMount() {
@@ -23,6 +24,8 @@ class Weather extends React.Component {
     getWeather2.getWeather(newUid)
       .then((weatherArray2) => {
         this.setState({ weatherArray2 });
+        console.log(this.props.weather);
+        console.log(this.state.weatherArray2);
       })
       .catch(err => console.error('error with getWeather', err));
   }

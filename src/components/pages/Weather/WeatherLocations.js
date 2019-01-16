@@ -8,8 +8,7 @@ class WeatherLocations extends React.Component {
   // }
 
   static propTypes = {
-    weather: weatherShape.weatherShape,
-    weatherArray2: PropTypes.arrayOf(PropTypes.PropTypes.func),
+    weatherArray2: PropTypes.arrayOf(weatherShape),
   }
 
   deleteEvent = (e) => {
@@ -17,7 +16,6 @@ class WeatherLocations extends React.Component {
     const { deleteSingleWeather, weather } = this.props;
     deleteSingleWeather(weather.id);
   }
-
 
   // current = (e) => {
   //   console.log('this', e);
