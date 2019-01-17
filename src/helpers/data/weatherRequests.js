@@ -37,6 +37,7 @@ const getIsCurrent = uid => new Promise((resolve, reject) => {
       }
       const isCurrent = weatherArray.find(x => x.isCurrent);
       resolve(isCurrent);
+      console.log('This is the isCurrent', isCurrent);
     })
     .catch((error) => {
       reject(error);

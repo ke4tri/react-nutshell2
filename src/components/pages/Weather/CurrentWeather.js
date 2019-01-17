@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import weatherShape from '../../../helpers/propz/weatherShape';
 
-class ReadWeather extends React.Component {
+
+class CurrentWeather extends React.Component {
   static propTypes = {
     weather: PropTypes.func,
-    weatherArray2: PropTypes.arrayOf(weatherShape),
+    weatherArrayTwo: PropTypes.arrayOf(weatherShape),
+    newUid: PropTypes.string,
   }
 
-  componentWillMount() {
-  }
 
   render() {
     return (
@@ -21,4 +21,4 @@ class ReadWeather extends React.Component {
   }
 }
 
-export default ReadWeather;
+export default CurrentWeather;
