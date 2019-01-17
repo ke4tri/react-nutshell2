@@ -11,31 +11,34 @@ import weatherShape from '../../../helpers/propz/weatherShape';
 class Weather extends React.Component {
   state = {
     newUid: '',
-    weatherArray2: [],
+    weatherArrayTwo: [],
   }
 
   static propTypes = {
     weather: PropTypes.arrayOf(weatherShape),
   }
 
-  componentWillMount() {
+  getSomeData = () => {
     const newUid = authRequests2.getCurrentUid();
     this.setState({ newUid });
     getWeather2.getWeather(newUid)
-      .then((weatherArray2) => {
-        this.setState({ weatherArray2 });
-        console.log(this.state.weatherArray2);
+      .then((weatherArrayTwo) => {
+        this.setState({ weatherArrayTwo });
+        console.log('State at start', this.state.weatherArrayTwo);
       })
       .catch(err => console.error('error with getWeather', err));
   }
 
+  componentWillMount() {
+    this.getSomeData();
+  }
+
   deleteOne = (weatherId) => {
-    // const newUid = authRequests2.getCurrentUid();
     getWeather2.deleteWeather(weatherId)
       .then(() => {
         getWeather2.getWeather(this.state.newUid)
-          .then((weatherArray2) => {
-            this.setState({ weatherArray2 });
+          .then((weatherArrayTwo) => {
+            this.setState({ weatherArrayTwo });
           });
       })
       .catch(err => console.error('error with deleteOne', err));
@@ -44,20 +47,34 @@ class Weather extends React.Component {
   formSubmitEvent = (newWeather) => {
     getWeather2.postRequest(newWeather).then(() => {
       getWeather2.getWeather(this.state.newUid)
-        .then((weatherArray2) => {
-          this.setState({ weatherArray2 });
+        .then((weatherArrayTwo) => {
+          this.setState({ weatherArrayTwo });
         });
     })
       .catch(err => console.error('error with weather post', err));
   }
 
+  trueFalse = (weatherId) => {
+    const newerArray = this.state.weatherArrayTwo;
+    newerArray.forEach((newer) => {
+      if (newer.isCurrent === true) {
+        getWeather2.patchIsCurrent(newer.id, false);
+      }
+    });
+    getWeather2.patchIsCurrent(weatherId.id, true);
+    this.getSomeData()
+      .catch(err => console.error('error with deleteOne', err));
+  }
+
   render() {
-    const weatherItemComponents = this.state.weatherArray2.map(weather => (
+    const weatherItemComponents = this.state.weatherArrayTwo.map(weather => (
       <WeatherLocations
       weather={weather}
       key={weather.id}
       deleteSingleWeather={this.deleteOne}
-      weatherArray2={this.state.weatherArray2}
+      weatherArrayTwo={this.state.weatherArrayTwo}
+      newUid={this.state.newUid}
+      trueFalse={this.trueFalse}
       />
     ));
     return (
@@ -66,7 +83,7 @@ class Weather extends React.Component {
         <div className="container d-flex flex-row">
         <div className="wxForm"><WeatherForm newUid={this.state.newUid} onSubmit={this.formSubmitEvent}/></div>
          <div className="city1">{weatherItemComponents}</div>
-         <div className="currentWx"><CurrentWeather weatherArray2={this.state.weatherArray2} /></div>
+         <div className="currentWx"><CurrentWeather weatherArrayTwo={this.state.weatherArrayTwo} newUid={this.state.newUid}/></div>
         </div>
       </div>
     );

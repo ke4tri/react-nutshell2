@@ -4,12 +4,15 @@ import weatherShape from '../../../helpers/propz/weatherShape';
 
 class WeatherLocations extends React.Component {
   state = {
-    isCurrent: true,
+    isCurrent: false,
   }
 
   static propTypes = {
-    weatherArray2: PropTypes.arrayOf(weatherShape),
+    weatherArrayTwo: PropTypes.arrayOf(weatherShape),
+    newUid: PropTypes.string,
+    trueFalse: PropTypes.func,
   }
+
 
   deleteEvent = (e) => {
     e.preventDefault();
@@ -17,10 +20,10 @@ class WeatherLocations extends React.Component {
     deleteSingleWeather(weather.id);
   }
 
-  current = (e) => {
-    console.log('this', e);
-    console.log(this.props.weather);
-    console.log(this.state.isCurrent);
+  updatingCurrent = (e) => {
+    e.preventDefault();
+    const weatherId = this.props.weather;
+    this.props.trueFalse(weatherId);
   }
 
   render() {
@@ -30,7 +33,7 @@ class WeatherLocations extends React.Component {
       <div className="locationBlock">
         <div className="citySt card mr-5 ml-5 mb-2 p-3">{weather.city}, {weather.state}
         <button className="btn btn-danger" onClick={this.deleteEvent}>X</button>
-        <button className="btn btn-secondary" onClick={this.current}>Current</button>
+        <button className="btn btn-secondary" onClick={this.updatingCurrent}>Current</button>
         </div>
       </div>
     );
